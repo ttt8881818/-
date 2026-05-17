@@ -7,622 +7,465 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#F7F6F3;color:#1a1a1a;min-height:100vh}
-.header{background:#1a1a1a;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
-.header-logo{color:#fff;font-size:12px;letter-spacing:3px;font-weight:500}
-.header-step{color:#666;font-size:12px}
-.wrap{max-width:540px;margin:0 auto;padding:28px 20px 80px}
-.prog-wrap{margin-bottom:28px}
-.prog-track{height:2px;background:#E0DDD8;border-radius:99px;overflow:hidden}
-.prog-fill{height:100%;background:#1a1a1a;border-radius:99px;transition:width .4s ease}
-.prog-label{font-size:12px;color:#999;margin-top:8px;display:flex;justify-content:space-between}
-.screen{display:none}.screen.active{display:block;animation:up .22s ease}
-@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.sec-badge{display:inline-block;font-size:10px;letter-spacing:2px;font-weight:600;padding:3px 10px;border-radius:99px;margin-bottom:12px;background:#1a1a1a;color:#fff}
-.q-num{font-size:11px;color:#aaa;margin-bottom:4px}
-.q-title{font-size:20px;font-weight:600;line-height:1.35;margin-bottom:4px}
-.q-sub{font-size:13px;color:#777;margin-bottom:20px;line-height:1.6}
-.opts{display:flex;flex-direction:column;gap:8px}
-.opt{background:#fff;border:1.5px solid #E8E5E0;border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .15s;display:flex;align-items:flex-start;gap:12px;user-select:none}
-.opt:hover{border-color:#bbb}
-.opt.sel{border:2px solid #1a1a1a;background:#FAFAF8}
-.opt.multi.sel{border:2px solid #1a1a1a;background:#F0F0EE}
-.opt-check{width:20px;height:20px;border:1.5px solid #ddd;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.opt.sel .opt-check{background:#1a1a1a;border-color:#1a1a1a}
-.opt-check-inner{width:8px;height:8px;background:#fff;border-radius:50%;display:none}
-.opt.sel .opt-check-inner{display:block}
-.multi-check{width:20px;height:20px;border:1.5px solid #ddd;border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.opt.sel .multi-check{background:#1a1a1a;border-color:#1a1a1a}
-.opt-body{flex:1}
-.opt-name{font-size:14px;font-weight:600;color:#1a1a1a}
-.opt-desc{font-size:12px;color:#999;margin-top:2px;line-height:1.4}
-.free-box{display:none;margin-top:10px}
-.free-box.show{display:block}
-.field input,.field textarea{width:100%;border:1.5px solid #E8E5E0;border-radius:10px;padding:12px 14px;font-size:14px;background:#fff;outline:none;font-family:inherit;transition:border-color .15s}
-.field input:focus,.field textarea:focus{border-color:#1a1a1a}
-.field textarea{min-height:80px;resize:vertical}
-.field{margin-bottom:12px}
-.nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:10px}
-.btn-next{background:#1a1a1a;color:#fff;border:none;padding:13px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;opacity:.3;transition:opacity .15s;white-space:nowrap}
-.btn-next.ok{opacity:1}
-.btn-next.ok:hover{opacity:.85}
-.btn-back{background:none;border:1.5px solid #E0DDD8;color:#777;padding:12px 18px;border-radius:10px;font-size:13px;cursor:pointer;white-space:nowrap}
-.btn-back:hover{border-color:#aaa}
-.upload-zone{border:1.5px dashed #D0CEC9;border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:background .15s;margin-bottom:10px}
-.upload-zone:hover{background:#F0EEE9}
-.upload-zone p{font-size:13px;color:#999;margin-top:6px}
-.file-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-.file-chip{display:flex;align-items:center;gap:8px;background:#F0EEE9;border-radius:8px;padding:6px 10px;font-size:12px;color:#555}
+
+.header{background:#1a1a1a;padding:16px 24px}
+.header-logo{color:#fff;font-size:11px;letter-spacing:4px;font-weight:600}
+
+.wrap{max-width:560px;margin:0 auto;padding:24px 16px 80px}
+
+/* カード */
+.card{background:#fff;border-radius:16px;border:1px solid #EBEBEB;padding:24px;margin-bottom:12px}
+
+/* セクションヘッダー（設備名 + 横線） */
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.sec-head-label{font-size:10px;letter-spacing:3px;font-weight:700;white-space:nowrap;color:#1a1a1a}
+.sec-head::after{content:'';flex:1;height:1px;background:#E8E5E0}
+
+/* 名前入力 */
+.name-label{font-size:13px;color:#777;margin-bottom:8px}
+.name-input{width:100%;border:1.5px solid #E8E5E0;border-radius:10px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;transition:border-color .15s}
+.name-input:focus{border-color:#1a1a1a}
+.name-input.err{border-color:#e74c3c}
+
+/* 設備トグル */
+.equip-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.equip-btn{background:#fff;border:1.5px solid #E8E5E0;border-radius:12px;padding:14px;font-size:13px;font-weight:600;color:#aaa;cursor:pointer;transition:all .15s;text-align:center;font-family:inherit}
+.equip-btn.active{background:#1a1a1a;border-color:#1a1a1a;color:#fff}
+.equip-grid.err .equip-btn:not(.active){border-color:#e74c3c}
+
+/* 質問ブロック */
+.q-block{margin-bottom:20px}
+.q-block:last-child{margin-bottom:0}
+.q-label{font-size:12px;color:#888;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.q-note{font-size:10px;color:#bbb;background:#F7F6F3;padding:1px 6px;border-radius:99px}
+.q-block.err .q-label{color:#e74c3c}
+
+/* ピル（横並びチップ） */
+.pills{display:flex;flex-wrap:wrap;gap:7px}
+.pill{background:#fff;border:1.5px solid #E8E5E0;border-radius:99px;padding:7px 16px;font-size:13px;font-weight:500;color:#1a1a1a;cursor:pointer;transition:all .12s;font-family:inherit}
+.pill:hover{border-color:#aaa}
+.pill.active{background:#1a1a1a;border-color:#1a1a1a;color:#fff}
+
+/* 行形式（ラベル左・ピル右） */
+.q-rows{border-top:1px solid #F0EEE9}
+.q-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0EEE9;gap:12px}
+.q-row-label{font-size:13px;color:#555;flex-shrink:0}
+.q-row.err .q-row-label{color:#e74c3c}
+.q-row .pills{flex-wrap:nowrap;justify-content:flex-end}
+
+/* 自由入力 */
+.free-input{width:100%;border:1.5px solid #E8E5E0;border-radius:10px;padding:10px 14px;font-size:14px;font-family:inherit;outline:none;margin-top:8px;transition:border-color .15s}
+.free-input:focus{border-color:#1a1a1a}
+
+/* テキストエリア */
+.textarea{width:100%;border:1.5px solid #E8E5E0;border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;outline:none;resize:vertical;min-height:72px;transition:border-color .15s;margin-top:4px}
+.textarea:focus{border-color:#1a1a1a}
+
+/* 画像アップロード */
+.upload-zone{border:1.5px dashed #D8D5D0;border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:background .12s;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.upload-zone:hover{background:#F7F6F3}
+.upload-zone span{font-size:12px;color:#aaa}
+.file-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.file-chip{display:flex;align-items:center;gap:8px;background:#F0EEE9;border-radius:8px;padding:5px 10px;font-size:12px;color:#555}
 .file-chip span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.file-chip button{background:none;border:none;cursor:pointer;color:#aaa;font-size:14px;padding:0;line-height:1}
-.intro-box{background:#fff;border-radius:14px;padding:24px;margin-bottom:20px;border:1px solid #E8E5E0}
-.intro-title{font-size:18px;font-weight:700;margin-bottom:10px}
-.intro-body{font-size:13px;color:#666;line-height:1.8}
-.done-box{background:#fff;border-radius:14px;padding:32px;text-align:center;border:1px solid #E8E5E0}
-.done-icon{width:52px;height:52px;background:#1a1a1a;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.file-chip button{background:none;border:none;cursor:pointer;color:#bbb;font-size:13px;padding:0}
+
+/* 送信エリア */
+.submit-area{margin-top:8px}
+.btn-submit{width:100%;background:#1a1a1a;color:#fff;border:none;padding:16px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-submit:hover{opacity:.85}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+.err-box{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 14px;font-size:13px;color:#c0392b;margin-bottom:12px;display:none}
+
+/* 完了画面 */
+#done-wrap{display:none;max-width:560px;margin:0 auto;padding:24px 16px}
+.done-card{background:#fff;border-radius:16px;border:1px solid #EBEBEB;padding:40px 24px;text-align:center}
+.done-icon{width:52px;height:52px;background:#1a1a1a;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
 .done-title{font-size:20px;font-weight:700;margin-bottom:8px}
 .done-sub{font-size:13px;color:#777;line-height:1.8}
-.sum{background:#F7F6F3;border-radius:10px;padding:14px;margin-top:18px;text-align:left}
-.sum-sec{font-size:10px;letter-spacing:2px;font-weight:600;color:#aaa;margin:10px 0 4px;text-transform:uppercase}
-.sum-sec:first-child{margin-top:0}
-.sum-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #EEE;font-size:12px}
-.sum-row:last-child{border-bottom:none}
-.sum-key{color:#999}
-.sum-val{font-weight:600;color:#1a1a1a;text-align:right;max-width:55%}
-.err{color:#c0392b;font-size:12px;margin-top:6px;display:none}
+
+/* セクション表示アニメ */
+.equip-section{display:none}
+.equip-section.open{display:block;animation:fadeUp .2s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
+
 <div class="header">
   <div class="header-logo">HACO RENOVE</div>
-  <div class="header-step" id="h-step"></div>
-</div>
-<div class="wrap">
-<div class="prog-wrap">
-  <div class="prog-track"><div class="prog-fill" id="prog" style="width:0%"></div></div>
-  <div class="prog-label"><span id="prog-label">はじめに</span><span id="prog-pct"></span></div>
 </div>
 
-<!-- イントロ -->
-<div class="screen active" id="s-intro">
-  <div class="intro-box">
-    <div class="intro-title">水回りヒアリングシート</div>
-    <div class="intro-body">交換する設備の機能面のご希望をお聞きします。所要時間は設備数によって異なります。</div>
+<div class="wrap" id="main-wrap">
+
+  <!-- お名前 -->
+  <div class="card">
+    <div class="name-label">お名前（フルネーム）</div>
+    <input class="name-input" type="text" id="in-name" placeholder="例：山田 太郎">
   </div>
-  <div class="field"><label style="font-size:13px;color:#666;display:block;margin-bottom:5px">お名前（フルネーム）</label><input type="text" id="in-name" placeholder="例：山田 太郎" /></div>
-  <div class="err" id="err-intro">お名前を入力してください</div>
-  <div class="nav"><div></div><button class="btn-next ok" onclick="startForm()">はじめる →</button></div>
-</div>
 
-<!-- 設備選択 -->
-<div class="screen" id="s-equip">
-  <div class="q-title">交換する設備を選んでください</div>
-  <div class="q-sub">複数選択できます。交換しない設備はスキップされます。</div>
-  <div class="opts" id="g-equip">
-    <div class="opt multi" data-val="kitchen" onclick="equipPick(this)">
-      <div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="opt-body"><div class="opt-name">キッチン</div></div>
-    </div>
-    <div class="opt multi" data-val="ub" onclick="equipPick(this)">
-      <div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="opt-body"><div class="opt-name">ユニットバス</div></div>
-    </div>
-    <div class="opt multi" data-val="men" onclick="equipPick(this)">
-      <div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="opt-body"><div class="opt-name">洗面台</div></div>
-    </div>
-    <div class="opt multi" data-val="toilet" onclick="equipPick(this)">
-      <div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="opt-body"><div class="opt-name">トイレ</div></div>
+  <!-- 設備選択 -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-head-label">交換する設備</span></div>
+    <div class="equip-grid" id="equip-grid">
+      <button class="equip-btn" data-val="kitchen" onclick="toggleEquip(this)">キッチン</button>
+      <button class="equip-btn" data-val="ub"      onclick="toggleEquip(this)">ユニットバス</button>
+      <button class="equip-btn" data-val="men"     onclick="toggleEquip(this)">洗面台</button>
+      <button class="equip-btn" data-val="toilet"  onclick="toggleEquip(this)">トイレ</button>
     </div>
   </div>
-  <div class="err" id="err-equip">少なくとも1つ選択してください</div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-equip" onclick="startEquip()">次へ →</button></div>
-</div>
 
-<!-- キッチン Q1 スタイル（複数選択） -->
-<div class="screen" id="s-k1">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q1 / 11</div>
-  <div class="q-title">スタイルを教えてください</div>
-  <div class="q-sub">複数選択できます</div>
-  <div class="opts" id="g-k1">
-    <div class="opt multi" data-val="壁付け" onclick="multiPick('k1',this)"><div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="opt-body"><div class="opt-name">壁付け</div></div></div>
-    <div class="opt multi" data-val="対面" onclick="multiPick('k1',this)"><div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="opt-body"><div class="opt-name">対面</div></div></div>
-    <div class="opt multi" data-val="ペニンシュラ" onclick="multiPick('k1',this)"><div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="opt-body"><div class="opt-name">ペニンシュラ</div></div></div>
-    <div class="opt multi" data-val="アイランド" onclick="multiPick('k1',this)"><div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="opt-body"><div class="opt-name">アイランド</div></div></div>
-    <div class="opt multi" data-val="Ⅱ型" onclick="multiPick('k1',this)"><div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="opt-body"><div class="opt-name">Ⅱ型</div></div></div>
-    <div class="opt multi" data-val="L型" onclick="multiPick('k1',this)"><div class="multi-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="opt-body"><div class="opt-name">L型</div></div></div>
+  <!-- キッチン -->
+  <div class="card equip-section" id="sec-kitchen">
+    <div class="sec-head"><span class="sec-head-label">キッチン</span></div>
+
+    <div class="q-block" id="qb-k1">
+      <div class="q-label">スタイル <span class="q-note">複数可</span></div>
+      <div class="pills" id="g-k1">
+        <button class="pill" data-val="壁付け"      onclick="multiPick('k1',this)">壁付け</button>
+        <button class="pill" data-val="対面"        onclick="multiPick('k1',this)">対面</button>
+        <button class="pill" data-val="ペニンシュラ" onclick="multiPick('k1',this)">ペニンシュラ</button>
+        <button class="pill" data-val="アイランド"  onclick="multiPick('k1',this)">アイランド</button>
+        <button class="pill" data-val="Ⅱ型"        onclick="multiPick('k1',this)">Ⅱ型</button>
+        <button class="pill" data-val="L型"         onclick="multiPick('k1',this)">L型</button>
+      </div>
+    </div>
+
+    <div class="q-block" id="qb-k2">
+      <div class="q-label">希望幅</div>
+      <div class="pills" id="g-k2">
+        <button class="pill" data-val="〜1800mm" onclick="pick('k2',this)">〜1800mm</button>
+        <button class="pill" data-val="2100mm"   onclick="pick('k2',this)">2100mm</button>
+        <button class="pill" data-val="2400mm"   onclick="pick('k2',this)">2400mm</button>
+        <button class="pill" data-val="2550mm"   onclick="pick('k2',this)">2550mm</button>
+        <button class="pill" data-val="2700mm〜" onclick="pick('k2',this)">2700mm〜</button>
+        <button class="pill" data-val="__free__" onclick="pick('k2',this)">その他</button>
+      </div>
+      <input class="free-input" type="text" id="free-k2" placeholder="例：2300mm" style="display:none" oninput="ans.k2=this.value">
+    </div>
+
+    <div class="q-block" id="qb-k3">
+      <div class="q-label">コンロ種類</div>
+      <div class="pills" id="g-k3">
+        <button class="pill" data-val="ガス" onclick="pick('k3',this)">ガス</button>
+        <button class="pill" data-val="IH"   onclick="pick('k3',this)">IH</button>
+      </div>
+    </div>
+
+    <div class="q-block" id="qb-k4">
+      <div class="q-label">コンロ口数</div>
+      <div class="pills" id="g-k4">
+        <button class="pill" data-val="2口" onclick="pick('k4',this)">2口</button>
+        <button class="pill" data-val="3口" onclick="pick('k4',this)">3口</button>
+      </div>
+    </div>
+
+    <div class="q-block" id="qb-k5">
+      <div class="q-label">グリル</div>
+      <div class="pills" id="g-k5">
+        <button class="pill" data-val="不要"    onclick="pick('k5',this)">不要</button>
+        <button class="pill" data-val="片面焼き" onclick="pick('k5',this)">片面焼き</button>
+        <button class="pill" data-val="両面焼き" onclick="pick('k5',this)">両面焼き</button>
+      </div>
+    </div>
+
+    <div class="q-block" id="qb-k6">
+      <div class="q-label">食洗機</div>
+      <div class="pills" id="g-k6">
+        <button class="pill" data-val="不要"        onclick="pick('k6',this)">不要</button>
+        <button class="pill" data-val="必要（国産）"  onclick="pick('k6',this)">必要（国産）</button>
+        <button class="pill" data-val="必要（海外製）" onclick="pick('k6',this)">必要（海外製）</button>
+      </div>
+    </div>
+
+    <!-- 行形式：ホース引き出し・自動水栓・浄水器・パントリー -->
+    <div class="q-rows">
+      <div class="q-row" id="qb-k7">
+        <span class="q-row-label">ホース引き出し</span>
+        <div class="pills" id="g-k7">
+          <button class="pill" data-val="必要" onclick="pick('k7',this)">必要</button>
+          <button class="pill" data-val="不要" onclick="pick('k7',this)">不要</button>
+        </div>
+      </div>
+      <div class="q-row" id="qb-k8">
+        <span class="q-row-label">自動水栓</span>
+        <div class="pills" id="g-k8">
+          <button class="pill" data-val="必要" onclick="pick('k8',this)">必要</button>
+          <button class="pill" data-val="不要" onclick="pick('k8',this)">不要</button>
+        </div>
+      </div>
+      <div class="q-row" id="qb-k9">
+        <span class="q-row-label">浄水器</span>
+        <div class="pills" id="g-k9">
+          <button class="pill" data-val="必要" onclick="pick('k9',this)">必要</button>
+          <button class="pill" data-val="不要" onclick="pick('k9',this)">不要</button>
+        </div>
+      </div>
+      <div class="q-row" id="qb-k10">
+        <span class="q-row-label">パントリー</span>
+        <div class="pills" id="g-k10">
+          <button class="pill" data-val="必要" onclick="pick('k10',this)">必要</button>
+          <button class="pill" data-val="不要" onclick="pick('k10',this)">不要</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-block" style="margin-top:20px">
+      <div class="q-label">その他・イメージ画像 <span class="q-note">任意</span></div>
+      <div class="upload-zone" onclick="document.getElementById('up-k').click()">
+        <svg width="16" height="16" fill="none" stroke="#ccc" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>画像を追加（任意）</span>
+      </div>
+      <input type="file" id="up-k" accept="image/*" multiple style="display:none" onchange="addFiles('k',this)">
+      <div class="file-list" id="fl-k"></div>
+      <textarea class="textarea" id="ta-k" placeholder="自由にご記入ください"></textarea>
+    </div>
   </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k1" onclick="goTo('k2')">次へ →</button></div>
-</div>
 
-<!-- キッチン Q2 希望幅 -->
-<div class="screen" id="s-k2">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q2 / 11</div>
-  <div class="q-title">希望の幅を教えてください</div>
-  <div class="opts" id="g-k2">
-    <div class="opt" data-val="〜1800mm" onclick="pick('k2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">〜1800mm</div></div></div>
-    <div class="opt" data-val="2100mm" onclick="pick('k2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">2100mm</div></div></div>
-    <div class="opt" data-val="2400mm" onclick="pick('k2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">2400mm</div></div></div>
-    <div class="opt" data-val="2550mm" onclick="pick('k2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">2550mm</div></div></div>
-    <div class="opt" data-val="2700mm〜" onclick="pick('k2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">2700mm〜</div></div></div>
-    <div class="opt" data-val="__free__" onclick="pick('k2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">その他（自由入力）</div></div></div>
+  <!-- ユニットバス -->
+  <div class="card equip-section" id="sec-ub">
+    <div class="sec-head"><span class="sec-head-label">ユニットバス</span></div>
+
+    <div class="q-block" id="qb-u1">
+      <div class="q-label">サイズ <span class="q-note">後ろ2桁が奥行き</span></div>
+      <div class="pills" id="g-u1">
+        <button class="pill" data-val="1216"    onclick="pick('u1',this)">1216</button>
+        <button class="pill" data-val="1418"    onclick="pick('u1',this)">1418</button>
+        <button class="pill" data-val="1620"    onclick="pick('u1',this)">1620</button>
+        <button class="pill" data-val="1624"    onclick="pick('u1',this)">1624</button>
+        <button class="pill" data-val="現状のまま" onclick="pick('u1',this)">現状のまま</button>
+      </div>
+    </div>
+
+    <div class="q-rows">
+      <div class="q-row" id="qb-u2">
+        <span class="q-row-label">浴室暖房乾燥機</span>
+        <div class="pills" id="g-u2">
+          <button class="pill" data-val="必要" onclick="pick('u2',this)">必要</button>
+          <button class="pill" data-val="不要" onclick="pick('u2',this)">不要</button>
+        </div>
+      </div>
+      <div class="q-row" id="qb-u3">
+        <span class="q-row-label">ランドリーパイプ</span>
+        <div class="pills" id="g-u3">
+          <button class="pill" data-val="0本" onclick="pick('u3',this)">0本</button>
+          <button class="pill" data-val="1本" onclick="pick('u3',this)">1本</button>
+          <button class="pill" data-val="2本" onclick="pick('u3',this)">2本</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-block" style="margin-top:20px">
+      <div class="q-label">その他・ご要望 <span class="q-note">任意</span></div>
+      <textarea class="textarea" id="ta-u" placeholder="自由にご記入ください"></textarea>
+    </div>
   </div>
-  <div class="free-box" id="free-k2"><div class="field"><input type="text" placeholder="例：2300mm" id="free-k2-val" oninput="ans.k2=this.value||'自由入力'" /></div></div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k2" onclick="goTo('k3')">次へ →</button></div>
-</div>
 
-<!-- キッチン Q3 コンロ種類 -->
-<div class="screen" id="s-k3">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q3 / 11</div>
-  <div class="q-title">コンロの種類を教えてください</div>
-  <div class="opts" id="g-k3">
-    <div class="opt" data-val="ガス" onclick="pick('k3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">ガス</div><div class="opt-desc">火力が強く料理好きに人気</div></div></div>
-    <div class="opt" data-val="IH" onclick="pick('k3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">IH</div><div class="opt-desc">掃除しやすく安全性が高い</div></div></div>
+  <!-- 洗面台 -->
+  <div class="card equip-section" id="sec-men">
+    <div class="sec-head"><span class="sec-head-label">洗面台</span></div>
+
+    <div class="q-block" id="qb-m1">
+      <div class="q-label">ボウルタイプ</div>
+      <div class="pills" id="g-m1">
+        <button class="pill" data-val="ベッセル"    onclick="pick('m1',this)">ベッセル</button>
+        <button class="pill" data-val="オンボウル"   onclick="pick('m1',this)">オンボウル</button>
+        <button class="pill" data-val="埋め込み"    onclick="pick('m1',this)">埋め込み</button>
+        <button class="pill" data-val="ボウル一体型" onclick="pick('m1',this)">ボウル一体型</button>
+      </div>
+    </div>
+
+    <div class="q-block" id="qb-m2">
+      <div class="q-label">希望幅</div>
+      <div class="pills" id="g-m2">
+        <button class="pill" data-val="600mm"    onclick="pick('m2',this)">600mm</button>
+        <button class="pill" data-val="750mm"    onclick="pick('m2',this)">750mm</button>
+        <button class="pill" data-val="900mm"    onclick="pick('m2',this)">900mm</button>
+        <button class="pill" data-val="1200mm"   onclick="pick('m2',this)">1200mm</button>
+        <button class="pill" data-val="__free__" onclick="pick('m2',this)">その他</button>
+      </div>
+      <input class="free-input" type="text" id="free-m2" placeholder="例：800mm" style="display:none" oninput="ans.m2=this.value">
+    </div>
+
+    <div class="q-block" id="qb-m3">
+      <div class="q-label">収納タイプ</div>
+      <div class="pills" id="g-m3">
+        <button class="pill" data-val="引き出し" onclick="pick('m3',this)">引き出し</button>
+        <button class="pill" data-val="開き扉"   onclick="pick('m3',this)">開き扉</button>
+        <button class="pill" data-val="オープン" onclick="pick('m3',this)">オープン</button>
+        <button class="pill" data-val="なし"     onclick="pick('m3',this)">なし</button>
+      </div>
+    </div>
+
+    <div class="q-rows">
+      <div class="q-row" id="qb-m4">
+        <span class="q-row-label">水栓タイプ</span>
+        <div class="pills" id="g-m4">
+          <button class="pill" data-val="壁付き" onclick="pick('m4',this)">壁付き</button>
+          <button class="pill" data-val="台付き" onclick="pick('m4',this)">台付き</button>
+        </div>
+      </div>
+      <div class="q-row" id="qb-m5">
+        <span class="q-row-label">ホース引き出し</span>
+        <div class="pills" id="g-m5">
+          <button class="pill" data-val="必要" onclick="pick('m5',this)">必要</button>
+          <button class="pill" data-val="不要" onclick="pick('m5',this)">不要</button>
+        </div>
+      </div>
+      <div class="q-row" id="qb-m6">
+        <span class="q-row-label">自動水栓</span>
+        <div class="pills" id="g-m6">
+          <button class="pill" data-val="必要" onclick="pick('m6',this)">必要</button>
+          <button class="pill" data-val="不要" onclick="pick('m6',this)">不要</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-block" style="margin-top:20px">
+      <div class="q-label">その他・ご要望 <span class="q-note">任意</span></div>
+      <textarea class="textarea" id="ta-m" placeholder="自由にご記入ください"></textarea>
+    </div>
   </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k3" onclick="goTo('k4')">次へ →</button></div>
-</div>
 
-<!-- キッチン Q4 コンロ口数 -->
-<div class="screen" id="s-k4">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q4 / 11</div>
-  <div class="q-title">コンロの口数を教えてください</div>
-  <div class="opts" id="g-k4">
-    <div class="opt" data-val="2口" onclick="pick('k4',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">2口</div></div></div>
-    <div class="opt" data-val="3口" onclick="pick('k4',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">3口</div></div></div>
+  <!-- トイレ -->
+  <div class="card equip-section" id="sec-toilet">
+    <div class="sec-head"><span class="sec-head-label">トイレ</span></div>
+
+    <div class="q-block" id="qb-t1">
+      <div class="q-label">メーカー</div>
+      <div class="pills" id="g-t1">
+        <button class="pill" data-val="TOTO"      onclick="pick('t1',this)">TOTO</button>
+        <button class="pill" data-val="LIXIL"     onclick="pick('t1',this)">LIXIL</button>
+        <button class="pill" data-val="Panasonic" onclick="pick('t1',this)">Panasonic</button>
+        <button class="pill" data-val="おまかせ"   onclick="pick('t1',this)">おまかせ</button>
+      </div>
+    </div>
+
+    <div class="q-block" id="qb-t2">
+      <div class="q-label">タンク</div>
+      <div class="pills" id="g-t2">
+        <button class="pill" data-val="タンクあり"    onclick="pickTank(this)">タンクあり</button>
+        <button class="pill" data-val="タンクレス"    onclick="pickTank(this)">タンクレス</button>
+        <button class="pill" data-val="こだわりなし"  onclick="pickTank(this)">こだわりなし</button>
+      </div>
+    </div>
+
+    <!-- 手洗い（タンク選択後に表示） -->
+    <div class="q-block" id="qb-t3" style="display:none">
+      <div class="q-label">手洗い</div>
+      <div class="pills" id="g-t3">
+        <button class="pill" data-val="タンク上手洗い" id="t3-tank" onclick="pick('t3',this)">タンク上手洗い</button>
+        <button class="pill" data-val="独立手洗い"     onclick="pick('t3',this)">独立手洗い</button>
+        <button class="pill" data-val="手洗いなし"     onclick="pick('t3',this)">手洗いなし</button>
+      </div>
+    </div>
+
+    <div class="q-rows">
+      <div class="q-row" id="qb-t4">
+        <span class="q-row-label">自動開閉</span>
+        <div class="pills" id="g-t4">
+          <button class="pill" data-val="あり" onclick="pick('t4',this)">あり</button>
+          <button class="pill" data-val="なし" onclick="pick('t4',this)">なし</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-block" style="margin-top:20px">
+      <div class="q-label">その他・ご要望 <span class="q-note">任意</span></div>
+      <textarea class="textarea" id="ta-t" placeholder="自由にご記入ください"></textarea>
+    </div>
   </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k4" onclick="goTo('k5')">次へ →</button></div>
-</div>
 
-<!-- キッチン Q5 グリル -->
-<div class="screen" id="s-k5">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q5 / 11</div>
-  <div class="q-title">グリルは必要ですか？</div>
-  <div class="opts" id="g-k5">
-    <div class="opt" data-val="不要" onclick="pick('k5',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">不要</div></div></div>
-    <div class="opt" data-val="片面焼き" onclick="pick('k5',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">片面焼き</div><div class="opt-desc">一般的なタイプ</div></div></div>
-    <div class="opt" data-val="両面焼き" onclick="pick('k5',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">両面焼き</div><div class="opt-desc">ひっくり返さずに両面を焼けるタイプ</div></div></div>
+  <!-- 送信 -->
+  <div class="submit-area">
+    <div class="err-box" id="err-submit"></div>
+    <button class="btn-submit" id="btn-submit" onclick="submitForm()">この内容で送信する →</button>
   </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k5" onclick="goTo('k6')">次へ →</button></div>
-</div>
 
-<!-- キッチン Q6 食洗機 -->
-<div class="screen" id="s-k6">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q6 / 11</div>
-  <div class="q-title">食洗機は必要ですか？</div>
-  <div class="opts" id="g-k6">
-    <div class="opt" data-val="不要" onclick="pick('k6',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">不要</div></div></div>
-    <div class="opt" data-val="必要（国産）" onclick="pick('k6',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">必要（国産）</div><div class="opt-desc">パナソニックなど・コンパクトで使いやすい</div></div></div>
-    <div class="opt" data-val="必要（海外製）" onclick="pick('k6',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">必要（海外製）</div><div class="opt-desc">ミーレ・ボッシュなど・容量が大きい</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k6" onclick="goTo('k7')">次へ →</button></div>
-</div>
-
-<!-- キッチン Q7 ホース引き出し -->
-<div class="screen" id="s-k7">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q7 / 11</div>
-  <div class="q-title">水栓のホース引き出し機能は必要ですか？</div>
-  <div class="q-sub">シンクの隅まで洗い流せる引き出し式の水栓です</div>
-  <div class="opts" id="g-k7">
-    <div class="opt" data-val="必要" onclick="pick('k7',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">必要</div></div></div>
-    <div class="opt" data-val="不要" onclick="pick('k7',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">不要</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k7" onclick="goTo('k8')">次へ →</button></div>
-</div>
-
-<!-- キッチン Q8 自動水栓 -->
-<div class="screen" id="s-k8">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q8 / 11</div>
-  <div class="q-title">自動水栓は必要ですか？</div>
-  <div class="q-sub">手をかざすだけで水が出るタイプです</div>
-  <div class="opts" id="g-k8">
-    <div class="opt" data-val="必要" onclick="pick('k8',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">必要</div></div></div>
-    <div class="opt" data-val="不要" onclick="pick('k8',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">不要</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k8" onclick="goTo('k9')">次へ →</button></div>
-</div>
-
-<!-- キッチン Q9 浄水器 -->
-<div class="screen" id="s-k9">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q9 / 11</div>
-  <div class="q-title">浄水器は必要ですか？</div>
-  <div class="opts" id="g-k9">
-    <div class="opt" data-val="必要" onclick="pick('k9',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">必要</div></div></div>
-    <div class="opt" data-val="不要" onclick="pick('k9',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">不要</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k9" onclick="goTo('k10')">次へ →</button></div>
-</div>
-
-<!-- キッチン Q10 パントリー -->
-<div class="screen" id="s-k10">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q10 / 11</div>
-  <div class="q-title">パントリーは必要ですか？</div>
-  <div class="q-sub">食材や食器をまとめて収納できるスペースです</div>
-  <div class="opts" id="g-k10">
-    <div class="opt" data-val="必要" onclick="pick('k10',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">必要</div></div></div>
-    <div class="opt" data-val="不要" onclick="pick('k10',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">不要</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-k10" onclick="goTo('k11')">次へ →</button></div>
-</div>
-
-<!-- キッチン Q11 その他 -->
-<div class="screen" id="s-k11">
-  <div class="sec-badge">キッチン</div>
-  <div class="q-num">Q11 / 11</div>
-  <div class="q-title">イメージ画像や要望があれば教えてください</div>
-  <div class="q-sub">任意です。スキップしてもかまいません。</div>
-  <div class="upload-zone" onclick="document.getElementById('up-k').click()">
-    <svg width="24" height="24" fill="none" stroke="#bbb" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-    <p>画像を追加（任意）</p>
-  </div>
-  <input type="file" id="up-k" accept="image/*" multiple style="display:none" onchange="addFiles('k',this)">
-  <div class="file-list" id="fl-k"></div>
-  <div class="field"><textarea id="ta-k" placeholder="自由にご記入ください"></textarea></div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next ok" onclick="nextSection('kitchen')">次へ →</button></div>
-</div>
-
-<!-- UB Q1 サイズ -->
-<div class="screen" id="s-u1">
-  <div class="sec-badge">ユニットバス</div>
-  <div class="q-num">Q1 / 4</div>
-  <div class="q-title">サイズを教えてください</div>
-  <div class="q-sub">後ろの2桁が奥行きです。数字が大きいほど足を伸ばしてゆっくり浸かれます。</div>
-  <div class="opts" id="g-u1">
-    <div class="opt" data-val="1216" onclick="pick('u1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">1216</div><div class="opt-desc">幅120cm × 奥行160cm・コンパクトタイプ</div></div></div>
-    <div class="opt" data-val="1418" onclick="pick('u1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">1418</div><div class="opt-desc">幅140cm × 奥行180cm・マンション標準サイズ</div></div></div>
-    <div class="opt" data-val="1620" onclick="pick('u1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">1620</div><div class="opt-desc">幅160cm × 奥行200cm・ゆったりサイズ</div></div></div>
-    <div class="opt" data-val="1624" onclick="pick('u1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">1624</div><div class="opt-desc">幅160cm × 奥行240cm・広めのゆとりサイズ</div></div></div>
-    <div class="opt" data-val="現状のまま" onclick="pick('u1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">現状のまま</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-u1" onclick="goTo('u2')">次へ →</button></div>
-</div>
-
-<!-- UB Q2 浴室暖房乾燥機 -->
-<div class="screen" id="s-u2">
-  <div class="sec-badge">ユニットバス</div>
-  <div class="q-num">Q2 / 4</div>
-  <div class="q-title">浴室暖房乾燥機は必要ですか？</div>
-  <div class="q-sub">浴室乾燥・暖房・涼風機能が使えます</div>
-  <div class="opts" id="g-u2">
-    <div class="opt" data-val="必要" onclick="pick('u2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">必要</div></div></div>
-    <div class="opt" data-val="不要" onclick="pick('u2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">不要</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-u2" onclick="goTo('u3')">次へ →</button></div>
-</div>
-
-<!-- UB Q3 ランドリーパイプ -->
-<div class="screen" id="s-u3">
-  <div class="sec-badge">ユニットバス</div>
-  <div class="q-num">Q3 / 4</div>
-  <div class="q-title">ランドリーパイプは何本必要ですか？</div>
-  <div class="q-sub">浴室内で洗濯物を干すためのパイプです</div>
-  <div class="opts" id="g-u3">
-    <div class="opt" data-val="0本" onclick="pick('u3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">0本（不要）</div></div></div>
-    <div class="opt" data-val="1本" onclick="pick('u3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">1本</div></div></div>
-    <div class="opt" data-val="2本" onclick="pick('u3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">2本</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-u3" onclick="goTo('u4')">次へ →</button></div>
-</div>
-
-<!-- UB Q4 その他 -->
-<div class="screen" id="s-u4">
-  <div class="sec-badge">ユニットバス</div>
-  <div class="q-num">Q4 / 4</div>
-  <div class="q-title">その他ご要望があれば教えてください</div>
-  <div class="field"><textarea id="ta-u" placeholder="自由にご記入ください（任意）"></textarea></div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next ok" onclick="nextSection('ub')">次へ →</button></div>
-</div>
-
-<!-- 洗面台 Q1 ボウルタイプ -->
-<div class="screen" id="s-m1">
-  <div class="sec-badge">洗面台</div>
-  <div class="q-num">Q1 / 7</div>
-  <div class="q-title">ボウルのタイプを教えてください</div>
-  <div class="opts" id="g-m1">
-    <div class="opt" data-val="ベッセル" onclick="pick('m1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">ベッセル</div><div class="opt-desc">カウンターの上にボウルが乗るタイプ</div></div></div>
-    <div class="opt" data-val="オンボウル" onclick="pick('m1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">オンボウル</div><div class="opt-desc">カウンター上に浅めのボウルが置かれるタイプ</div></div></div>
-    <div class="opt" data-val="埋め込み" onclick="pick('m1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">埋め込み</div><div class="opt-desc">カウンターにボウルが埋め込まれたタイプ</div></div></div>
-    <div class="opt" data-val="ボウル一体型" onclick="pick('m1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">ボウル一体型</div><div class="opt-desc">カウンターとボウルが一体成型のタイプ</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-m1" onclick="goTo('m2')">次へ →</button></div>
-</div>
-
-<!-- 洗面台 Q2 希望幅 -->
-<div class="screen" id="s-m2">
-  <div class="sec-badge">洗面台</div>
-  <div class="q-num">Q2 / 7</div>
-  <div class="q-title">希望の幅を教えてください</div>
-  <div class="opts" id="g-m2">
-    <div class="opt" data-val="600mm" onclick="pick('m2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">600mm</div></div></div>
-    <div class="opt" data-val="750mm" onclick="pick('m2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">750mm</div></div></div>
-    <div class="opt" data-val="900mm" onclick="pick('m2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">900mm</div></div></div>
-    <div class="opt" data-val="1200mm" onclick="pick('m2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">1200mm</div></div></div>
-    <div class="opt" data-val="__free__" onclick="pick('m2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">その他（自由入力）</div></div></div>
-  </div>
-  <div class="free-box" id="free-m2"><div class="field"><input type="text" placeholder="例：800mm" id="free-m2-val" oninput="ans.m2=this.value||'自由入力'" /></div></div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-m2" onclick="goTo('m3')">次へ →</button></div>
-</div>
-
-<!-- 洗面台 Q3 収納 -->
-<div class="screen" id="s-m3">
-  <div class="sec-badge">洗面台</div>
-  <div class="q-num">Q3 / 7</div>
-  <div class="q-title">収納のタイプを教えてください</div>
-  <div class="opts" id="g-m3">
-    <div class="opt" data-val="引き出し" onclick="pick('m3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">引き出し</div><div class="opt-desc">引き出し式の収納</div></div></div>
-    <div class="opt" data-val="開き扉" onclick="pick('m3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">開き扉</div><div class="opt-desc">扉を開けるタイプ</div></div></div>
-    <div class="opt" data-val="オープン" onclick="pick('m3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">オープン（扉なし）</div><div class="opt-desc">扉なしのオープン収納</div></div></div>
-    <div class="opt" data-val="なし" onclick="pick('m3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">なし</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-m3" onclick="goTo('m4')">次へ →</button></div>
-</div>
-
-<!-- 洗面台 Q4 水栓タイプ -->
-<div class="screen" id="s-m4">
-  <div class="sec-badge">洗面台</div>
-  <div class="q-num">Q4 / 7</div>
-  <div class="q-title">水栓のタイプを教えてください</div>
-  <div class="opts" id="g-m4">
-    <div class="opt" data-val="壁付き" onclick="pick('m4',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">壁付き</div><div class="opt-desc">水栓が壁から出るタイプ・スタイリッシュな印象</div></div></div>
-    <div class="opt" data-val="台付き" onclick="pick('m4',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">台付き</div><div class="opt-desc">カウンターに水栓が付くタイプ・一般的</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-m4" onclick="goTo('m5')">次へ →</button></div>
-</div>
-
-<!-- 洗面台 Q5 ホース引き出し -->
-<div class="screen" id="s-m5">
-  <div class="sec-badge">洗面台</div>
-  <div class="q-num">Q5 / 7</div>
-  <div class="q-title">ホースの引き出し機能は必要ですか？</div>
-  <div class="opts" id="g-m5">
-    <div class="opt" data-val="必要" onclick="pick('m5',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">必要</div></div></div>
-    <div class="opt" data-val="不要" onclick="pick('m5',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">不要</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-m5" onclick="goTo('m6')">次へ →</button></div>
-</div>
-
-<!-- 洗面台 Q6 自動水栓 -->
-<div class="screen" id="s-m6">
-  <div class="sec-badge">洗面台</div>
-  <div class="q-num">Q6 / 7</div>
-  <div class="q-title">自動水栓は必要ですか？</div>
-  <div class="opts" id="g-m6">
-    <div class="opt" data-val="必要" onclick="pick('m6',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">必要</div></div></div>
-    <div class="opt" data-val="不要" onclick="pick('m6',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">不要</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-m6" onclick="goTo('m7')">次へ →</button></div>
-</div>
-
-<!-- 洗面台 Q7 その他 -->
-<div class="screen" id="s-m7">
-  <div class="sec-badge">洗面台</div>
-  <div class="q-num">Q7 / 7</div>
-  <div class="q-title">その他ご要望があれば教えてください</div>
-  <div class="field"><textarea id="ta-m" placeholder="自由にご記入ください（任意）"></textarea></div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next ok" onclick="nextSection('men')">次へ →</button></div>
-</div>
-
-<!-- トイレ Q1 メーカー -->
-<div class="screen" id="s-t1">
-  <div class="sec-badge">トイレ</div>
-  <div class="q-num">Q1 / 5</div>
-  <div class="q-title">メーカーのご希望はありますか？</div>
-  <div class="opts" id="g-t1">
-    <div class="opt" data-val="TOTO" onclick="pick('t1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">TOTO</div><div class="opt-desc">国内シェアNo.1・品質で定評</div></div></div>
-    <div class="opt" data-val="LIXIL" onclick="pick('t1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">LIXIL</div><div class="opt-desc">デザイン豊富・幅広い価格帯</div></div></div>
-    <div class="opt" data-val="Panasonic" onclick="pick('t1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">Panasonic</div><div class="opt-desc">スマート機能・IoT連携</div></div></div>
-    <div class="opt" data-val="おまかせ" onclick="pick('t1',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">おまかせ</div><div class="opt-desc">担当デザイナーにお任せする</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-t1" onclick="goTo('t2')">次へ →</button></div>
-</div>
-
-<!-- トイレ Q2 タンク -->
-<div class="screen" id="s-t2">
-  <div class="sec-badge">トイレ</div>
-  <div class="q-num">Q2 / 5</div>
-  <div class="q-title">タンクのタイプを教えてください</div>
-  <div class="opts" id="g-t2">
-    <div class="opt" data-val="タンクあり" onclick="pick('t2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">タンクあり</div><div class="opt-desc">一般的なタイプ・コストを抑えやすい</div></div></div>
-    <div class="opt" data-val="タンクレス" onclick="pick('t2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">タンクレス</div><div class="opt-desc">スタイリッシュ・省スペース</div></div></div>
-    <div class="opt" data-val="こだわりなし" onclick="pick('t2',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">こだわりなし</div><div class="opt-desc">担当デザイナーにお任せする</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-t2" onclick="nextTank()">次へ →</button></div>
-</div>
-
-<!-- トイレ Q3a 手洗い（タンクあり） -->
-<div class="screen" id="s-t3a">
-  <div class="sec-badge">トイレ</div>
-  <div class="q-num">Q3 / 5</div>
-  <div class="q-title">手洗いのスタイルを教えてください</div>
-  <div class="opts" id="g-t3a">
-    <div class="opt" data-val="タンク上手洗い" onclick="pick('t3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">タンク上手洗い</div><div class="opt-desc">タンクに手洗いが一体になったタイプ</div></div></div>
-    <div class="opt" data-val="独立手洗い" onclick="pick('t3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">独立手洗い</div><div class="opt-desc">別に手洗い器を設置するタイプ</div></div></div>
-    <div class="opt" data-val="手洗いなし" onclick="pick('t3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">手洗いなし</div><div class="opt-desc">洗面台で代用・またはなし</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-t3a" onclick="goTo('t4')">次へ →</button></div>
-</div>
-
-<!-- トイレ Q3b 手洗い（タンクレス） -->
-<div class="screen" id="s-t3b">
-  <div class="sec-badge">トイレ</div>
-  <div class="q-num">Q3 / 5</div>
-  <div class="q-title">手洗いのスタイルを教えてください</div>
-  <div class="q-sub">タンクレスの場合、独立した手洗い器が必要になります</div>
-  <div class="opts" id="g-t3b">
-    <div class="opt" data-val="独立手洗い" onclick="pick('t3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">独立手洗い</div><div class="opt-desc">別に手洗い器を設置するタイプ</div></div></div>
-    <div class="opt" data-val="手洗いなし" onclick="pick('t3',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">手洗いなし</div><div class="opt-desc">洗面台で代用・またはなし</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-t3b" onclick="goTo('t4')">次へ →</button></div>
-</div>
-
-<!-- トイレ Q4 自動開閉 -->
-<div class="screen" id="s-t4">
-  <div class="sec-badge">トイレ</div>
-  <div class="q-num">Q4 / 5</div>
-  <div class="q-title">フタの自動開閉は必要ですか？</div>
-  <div class="q-sub">近づくと自動でフタが開くタイプです</div>
-  <div class="opts" id="g-t4">
-    <div class="opt" data-val="あり" onclick="pick('t4',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">あり</div><div class="opt-desc">近づくと自動でフタが開く</div></div></div>
-    <div class="opt" data-val="なし" onclick="pick('t4',this)"><div class="opt-check"><div class="opt-check-inner"></div></div><div class="opt-body"><div class="opt-name">なし</div><div class="opt-desc">手動タイプ・シンプル</div></div></div>
-  </div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next" id="next-t4" onclick="goTo('t5')">次へ →</button></div>
-</div>
-
-<!-- トイレ Q5 その他 -->
-<div class="screen" id="s-t5">
-  <div class="sec-badge">トイレ</div>
-  <div class="q-num">Q5 / 5</div>
-  <div class="q-title">その他ご要望があれば教えてください</div>
-  <div class="field"><textarea id="ta-t" placeholder="自由にご記入ください（任意）"></textarea></div>
-  <div class="nav"><button class="btn-back" onclick="goBack()">← 戻る</button><button class="btn-next ok" id="btn-submit" onclick="nextSection('toilet')">送信する →</button></div>
 </div>
 
 <!-- 完了 -->
-<div class="screen" id="s-done">
-  <div class="done-box">
+<div id="done-wrap">
+  <div class="done-card">
     <div class="done-icon">
       <svg width="22" height="22" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
     <div class="done-title">ご回答ありがとうございました</div>
     <div class="done-sub">内容を受け付けました。<br>担当デザイナーより改めてご連絡いたします。</div>
-    <div class="sum" id="summary"></div>
   </div>
-</div>
-
 </div>
 
 <script>
 const ans = {};
 const multiAns = { k1: [] };
-const history = [];
-let current = 'intro';
-
-const TOTAL = 30;
-const stepNum = {
-  intro:0,
-  k1:1,k2:2,k3:3,k4:4,k5:5,k6:6,k7:7,k8:8,k9:9,k10:10,k11:11,
-  u1:12,u2:13,u3:14,u4:15,
-  m1:16,m2:17,m3:18,m4:19,m5:20,m6:21,m7:22,
-  t1:23,t2:24,t3:25,t3a:25,t3b:25,t4:26,t5:27,
-  done:30
-};
-const secLabel = {
-  intro:'はじめに',
-  k1:'キッチン',k2:'キッチン',k3:'キッチン',k4:'キッチン',k5:'キッチン',
-  k6:'キッチン',k7:'キッチン',k8:'キッチン',k9:'キッチン',k10:'キッチン',k11:'キッチン',
-  u1:'ユニットバス',u2:'ユニットバス',u3:'ユニットバス',u4:'ユニットバス',
-  m1:'洗面台',m2:'洗面台',m3:'洗面台',m4:'洗面台',m5:'洗面台',m6:'洗面台',m7:'洗面台',
-  t1:'トイレ',t2:'トイレ',t3a:'トイレ',t3b:'トイレ',t4:'トイレ',t5:'トイレ',
-  done:'完了'
-};
-
-function updateProg(id) {
-  const n = stepNum[id] || 0;
-  const pct = Math.round(n / TOTAL * 100);
-  document.getElementById('prog').style.width = pct + '%';
-  document.getElementById('prog-label').textContent = secLabel[id] || '';
-  document.getElementById('prog-pct').textContent = pct > 0 ? pct + '%' : '';
-  document.getElementById('h-step').textContent = secLabel[id] || '';
-}
-
-function goTo(id) {
-  document.getElementById('s-' + current).classList.remove('active');
-  history.push(current);
-  current = id;
-  document.getElementById('s-' + id).classList.add('active');
-  updateProg(id);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function goBack() {
-  if (!history.length) return;
-  document.getElementById('s-' + current).classList.remove('active');
-  current = history.pop();
-  document.getElementById('s-' + current).classList.add('active');
-  updateProg(current);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
 const selectedEquip = new Set();
 
-function startForm() {
-  const name = document.getElementById('in-name').value.trim();
-  if (!name) { document.getElementById('err-intro').style.display = 'block'; return; }
-  document.getElementById('err-intro').style.display = 'none';
-  ans.name = name;
-  goTo('equip');
-}
-
-function equipPick(el) {
-  el.classList.toggle('sel');
-  const val = el.dataset.val;
-  if (selectedEquip.has(val)) selectedEquip.delete(val);
-  else selectedEquip.add(val);
-  const btn = document.getElementById('next-equip');
-  btn.classList.toggle('ok', selectedEquip.size > 0);
-}
-
-function startEquip() {
-  if (selectedEquip.size === 0) {
-    document.getElementById('err-equip').style.display = 'block';
-    return;
+// ─── 設備トグル ──────────────────────────────
+function toggleEquip(btn) {
+  const val = btn.dataset.val;
+  const sec = document.getElementById('sec-' + val);
+  btn.classList.toggle('active');
+  if (selectedEquip.has(val)) {
+    selectedEquip.delete(val);
+    sec.classList.remove('open');
+    setTimeout(() => { sec.style.display = 'none'; }, 0);
+  } else {
+    selectedEquip.add(val);
+    sec.style.display = 'block';
+    requestAnimationFrame(() => sec.classList.add('open'));
+    setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }
-  document.getElementById('err-equip').style.display = 'none';
-  if (selectedEquip.has('kitchen')) goTo('k1');
-  else if (selectedEquip.has('ub')) goTo('u1');
-  else if (selectedEquip.has('men')) goTo('m1');
-  else goTo('t1');
+  document.getElementById('equip-grid').classList.remove('err');
 }
 
-function nextSection(sec) {
-  const order = ['kitchen', 'ub', 'men', 'toilet'];
-  const first = { kitchen: 'k1', ub: 'u1', men: 'm1', toilet: 't1' };
-  const idx = order.indexOf(sec);
-  for (let i = idx + 1; i < order.length; i++) {
-    if (selectedEquip.has(order[i])) { goTo(first[order[i]]); return; }
+// ─── 単一選択 ────────────────────────────────
+function pick(key, btn) {
+  document.querySelectorAll('#g-' + key + ' .pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const isFree = btn.dataset.val === '__free__';
+  ans[key] = isFree ? '' : btn.dataset.val;
+  const fi = document.getElementById('free-' + key);
+  if (fi) {
+    fi.style.display = isFree ? 'block' : 'none';
+    if (isFree) fi.focus();
   }
-  submitForm();
+  clearErr(key);
 }
 
-function pick(key, el) {
-  const grpId = 'g-' + key;
-  document.querySelectorAll('#' + grpId + ' .opt').forEach(o => o.classList.remove('sel'));
-  el.classList.add('sel');
-  ans[key] = el.dataset.val === '__free__' ? '自由入力' : el.dataset.val;
-  const freeEl = document.getElementById('free-' + key);
-  if (freeEl) freeEl.classList.toggle('show', el.dataset.val === '__free__');
-  const nextBtn = document.getElementById('next-' + key);
-  if (nextBtn) nextBtn.classList.add('ok');
-}
-
-function multiPick(key, el) {
-  el.classList.toggle('sel');
-  const val = el.dataset.val;
+// ─── 複数選択 ────────────────────────────────
+function multiPick(key, btn) {
+  btn.classList.toggle('active');
+  const val = btn.dataset.val;
   const arr = multiAns[key];
-  const idx = arr.indexOf(val);
-  if (idx > -1) arr.splice(idx, 1);
-  else arr.push(val);
+  const i = arr.indexOf(val);
+  if (i > -1) arr.splice(i, 1); else arr.push(val);
   ans[key] = arr.join(' / ');
-  const nextBtn = document.getElementById('next-' + key);
-  if (nextBtn) nextBtn.classList.toggle('ok', arr.length > 0);
+  clearErr(key);
 }
 
-function nextTank() {
-  if (!ans.t2) return;
-  if (ans.t2 === 'タンクあり') goTo('t3a');
-  else if (ans.t2 === 'タンクレス') goTo('t3b');
-  else { ans.t3 = ''; goTo('t4'); }
+// ─── タンク選択（手洗い連動） ────────────────
+function pickTank(btn) {
+  pick('t2', btn);
+  const t3block = document.getElementById('qb-t3');
+  const t3tankBtn = document.getElementById('t3-tank');
+  const t2 = ans.t2;
+
+  // 手洗いブロックを表示
+  t3block.style.display = 'block';
+
+  // タンクレス → タンク上手洗いを非表示
+  if (t2 === 'タンクレス') {
+    t3tankBtn.style.display = 'none';
+    if (ans.t3 === 'タンク上手洗い') {
+      ans.t3 = '';
+      document.querySelectorAll('#g-t3 .pill').forEach(p => p.classList.remove('active'));
+    }
+  } else {
+    t3tankBtn.style.display = '';
+  }
 }
 
+// ─── 画像アップロード ────────────────────────
 function addFiles(key, input) {
   const list = document.getElementById('fl-' + key);
   Array.from(input.files).forEach(f => {
@@ -633,45 +476,73 @@ function addFiles(key, input) {
   });
 }
 
+// ─── バリデーション ──────────────────────────
+// 必須項目の定義（設備ID → チェックするansキーとqb-ID）
+const REQUIRED = {
+  kitchen: ['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10'],
+  ub:      ['u1','u2','u3'],
+  men:     ['m1','m2','m3','m4','m5','m6'],
+  toilet:  ['t1','t2','t3','t4'],
+};
+
+function clearErr(key) {
+  const el = document.getElementById('qb-' + key);
+  if (el) el.classList.remove('err');
+}
+
+function validate() {
+  let ok = true;
+  const name = document.getElementById('in-name').value.trim();
+  if (!name) {
+    document.getElementById('in-name').classList.add('err');
+    ok = false;
+  }
+  if (selectedEquip.size === 0) {
+    document.getElementById('equip-grid').classList.add('err');
+    ok = false;
+  }
+  selectedEquip.forEach(equip => {
+    REQUIRED[equip].forEach(key => {
+      // t3はタンク選択済み時のみ必須
+      if (key === 't3' && !ans.t2) return;
+      if (!ans[key]) {
+        const el = document.getElementById('qb-' + key);
+        if (el) el.classList.add('err');
+        ok = false;
+      }
+    });
+  });
+  return ok;
+}
+
+// ─── 送信 ────────────────────────────────────
 async function submitForm() {
+  if (!validate()) {
+    const firstErr = document.querySelector('.err');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
   const btn = document.getElementById('btn-submit');
+  const errBox = document.getElementById('err-submit');
   btn.textContent = '送信中...';
   btn.disabled = true;
+  errBox.style.display = 'none';
 
   const today = new Date().toISOString().split('T')[0];
-  const projectName = ans.name + ' — ' + today;
+  const get = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  const name = document.getElementById('in-name').value.trim();
 
   const formData = {
-    projectName,
-    name: ans.name,
-    date: today,
-    k1: Array.isArray(ans.k1) ? ans.k1.join('・') : (ans.k1 || ''),
-    k2: ans.k2 || '',
-    k3: ans.k3 || '',
-    k4: ans.k4 || '',
-    k5: ans.k5 || '',
-    k6: ans.k6 || '',
-    k7: ans.k7 || '',
-    k8: ans.k8 || '',
-    k9: ans.k9 || '',
-    k10: ans.k10 || '',
-    kOther: (document.getElementById('ta-k') || {}).value || '',
-    u1: ans.u1 || '',
-    u2: ans.u2 || '',
-    u3: ans.u3 || '',
-    uOther: (document.getElementById('ta-u') || {}).value || '',
-    m1: ans.m1 || '',
-    m2: ans.m2 || '',
-    m3: ans.m3 || '',
-    m4: ans.m4 || '',
-    m5: ans.m5 || '',
-    m6: ans.m6 || '',
-    mOther: (document.getElementById('ta-m') || {}).value || '',
-    t1: ans.t1 || '',
-    t2: ans.t2 || '',
-    t3: ans.t3 || '',
-    t4: ans.t4 || '',
-    tOther: (document.getElementById('ta-t') || {}).value || '',
+    projectName: name + ' — ' + today,
+    name, date: today,
+    k1: ans.k1||'', k2: ans.k2||'', k3: ans.k3||'', k4: ans.k4||'',
+    k5: ans.k5||'', k6: ans.k6||'', k7: ans.k7||'', k8: ans.k8||'',
+    k9: ans.k9||'', k10: ans.k10||'', kOther: get('ta-k'),
+    u1: ans.u1||'', u2: ans.u2||'', u3: ans.u3||'', uOther: get('ta-u'),
+    m1: ans.m1||'', m2: ans.m2||'', m3: ans.m3||'', m4: ans.m4||'',
+    m5: ans.m5||'', m6: ans.m6||'', mOther: get('ta-m'),
+    t1: ans.t1||'', t2: ans.t2||'', t3: ans.t3||'', t4: ans.t4||'', tOther: get('ta-t'),
   };
 
   try {
@@ -681,40 +552,25 @@ async function submitForm() {
       body: JSON.stringify(formData),
     });
     if (!res.ok) {
-      const err = await res.json();
-      console.error('保存エラー:', err);
+      const err = await res.json().catch(() => ({}));
+      errBox.textContent = '保存エラー: ' + (err.error || res.status);
+      errBox.style.display = 'block';
+      btn.textContent = 'この内容で送信する →';
+      btn.disabled = false;
+      return;
     }
   } catch (e) {
-    console.error('送信エラー:', e);
+    errBox.textContent = '通信エラー: ' + e.message;
+    errBox.style.display = 'block';
+    btn.textContent = 'この内容で送信する →';
+    btn.disabled = false;
+    return;
   }
 
-  showDone();
+  document.getElementById('main-wrap').style.display = 'none';
+  document.getElementById('done-wrap').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function showDone() {
-  const rows = [
-    ['キッチン', null],
-    ['スタイル', ans.k1], ['希望幅', ans.k2], ['コンロ', ans.k3],
-    ['コンロ口数', ans.k4], ['グリル', ans.k5], ['食洗機', ans.k6],
-    ['ホース引き出し', ans.k7], ['自動水栓', ans.k8], ['浄水器', ans.k9], ['パントリー', ans.k10],
-    ['ユニットバス', null],
-    ['サイズ', ans.u1], ['浴室暖房乾燥機', ans.u2], ['ランドリーパイプ', ans.u3],
-    ['洗面台', null],
-    ['ボウルタイプ', ans.m1], ['希望幅', ans.m2], ['収納', ans.m3],
-    ['水栓タイプ', ans.m4], ['ホース引き出し', ans.m5], ['自動水栓', ans.m6],
-    ['トイレ', null],
-    ['メーカー', ans.t1], ['タンク', ans.t2], ['手洗い', ans.t3 || '—'], ['自動開閉', ans.t4],
-  ];
-
-  document.getElementById('summary').innerHTML = rows.map(([k, v]) => {
-    if (v === null) return `<div class="sum-sec">${k}</div>`;
-    return `<div class="sum-row"><span class="sum-key">${k}</span><span class="sum-val">${v || '—'}</span></div>`;
-  }).join('');
-
-  goTo('done');
-}
-
-updateProg('intro');
 </script>
 </body>
 </html>
