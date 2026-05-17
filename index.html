@@ -641,55 +641,51 @@ async function submitForm() {
   const today = new Date().toISOString().split('T')[0];
   const projectName = ans.name + ' — ' + today;
 
+  const formData = {
+    projectName,
+    name: ans.name,
+    date: today,
+    k1: Array.isArray(ans.k1) ? ans.k1.join('・') : (ans.k1 || ''),
+    k2: ans.k2 || '',
+    k3: ans.k3 || '',
+    k4: ans.k4 || '',
+    k5: ans.k5 || '',
+    k6: ans.k6 || '',
+    k7: ans.k7 || '',
+    k8: ans.k8 || '',
+    k9: ans.k9 || '',
+    k10: ans.k10 || '',
+    kOther: (document.getElementById('ta-k') || {}).value || '',
+    u1: ans.u1 || '',
+    u2: ans.u2 || '',
+    u3: ans.u3 || '',
+    uOther: (document.getElementById('ta-u') || {}).value || '',
+    m1: ans.m1 || '',
+    m2: ans.m2 || '',
+    m3: ans.m3 || '',
+    m4: ans.m4 || '',
+    m5: ans.m5 || '',
+    m6: ans.m6 || '',
+    mOther: (document.getElementById('ta-m') || {}).value || '',
+    t1: ans.t1 || '',
+    t2: ans.t2 || '',
+    t3: ans.t3 || '',
+    t4: ans.t4 || '',
+    tOther: (document.getElementById('ta-t') || {}).value || '',
+  };
+
   try {
-    await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/api/save-to-notion', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: 'あなたはNotionにデータを保存するアシスタントです。指定された内容をNotionデータベースに正確に保存してください。',
-        messages: [{
-          role: 'user',
-          content: `以下の内容をNotionデータベース collection://ccfcef19-256c-46d8-b904-c835ef6c468b に新しいページとして保存してください。
-
-邸名: ${projectName}
-お名前: ${ans.name}
-回答日: ${today}
-フェーズ: 回答済み
-キッチン_スタイル: ${ans.k1 || ''}
-キッチン_希望幅: ${ans.k2 || ''}
-キッチン_コンロ種類: ${ans.k3 || ''}
-キッチン_コンロ口数: ${ans.k4 || ''}
-キッチン_グリル: ${ans.k5 || ''}
-キッチン_食洗機: ${ans.k6 || ''}
-キッチン_ホース引き出し: ${ans.k7 || ''}
-キッチン_自動水栓: ${ans.k8 || ''}
-キッチン_浄水器: ${ans.k9 || ''}
-キッチン_パントリー: ${ans.k10 || ''}
-キッチン_その他: ${document.getElementById('ta-k').value || ''}
-UB_サイズ: ${ans.u1 || ''}
-UB_浴室暖房乾燥機: ${ans.u2 || ''}
-UB_ランドリーパイプ: ${ans.u3 || ''}
-UB_その他: ${document.getElementById('ta-u').value || ''}
-洗面_ボウルタイプ: ${ans.m1 || ''}
-洗面_希望幅: ${ans.m2 || ''}
-洗面_収納タイプ: ${ans.m3 || ''}
-洗面_水栓タイプ: ${ans.m4 || ''}
-洗面_ホース引き出し: ${ans.m5 || ''}
-洗面_自動水栓: ${ans.m6 || ''}
-洗面_その他: ${document.getElementById('ta-m').value || ''}
-トイレ_メーカー: ${ans.t1 || ''}
-トイレ_タンク: ${ans.t2 || ''}
-トイレ_手洗い: ${ans.t3 || ''}
-トイレ_自動開閉: ${ans.t4 || ''}
-トイレ_その他: ${document.getElementById('ta-t').value || ''}`
-        }],
-        mcp_servers: [{ type: 'url', url: 'https://mcp.notion.com/mcp', name: 'notion-mcp' }]
-      })
+      body: JSON.stringify(formData),
     });
+    if (!res.ok) {
+      const err = await res.json();
+      console.error('保存エラー:', err);
+    }
   } catch (e) {
-    console.error(e);
+    console.error('送信エラー:', e);
   }
 
   showDone();
