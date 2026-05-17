@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
   }
 
   const data = req.body;
-  const DATABASE_ID = 'ccfcef19-256c-46d8-b904-c835ef6c468b';
+  const DATABASE_ID = '174bdda0a55e4c18b7590ae4825ff0b8';
 
   // Notionプロパティを組み立てる
   const properties = {
