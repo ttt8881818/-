@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -33,12 +33,10 @@ export default async function handler(req, res) {
   addSelect('キッチン_浄水器', data.k9);
   addSelect('キッチン_パントリー', data.k10);
   addText('キッチン_その他', data.kOther);
-
   addSelect('UB_サイズ', data.u1);
   addSelect('UB_浴室暖房乾燥機', data.u2);
   addSelect('UB_ランドリーパイプ', data.u3);
   addText('UB_その他', data.uOther);
-
   addSelect('洗面_ボウルタイプ', data.m1);
   addText('洗面_希望幅', data.m2);
   addSelect('洗面_収納タイプ', data.m3);
@@ -46,7 +44,6 @@ export default async function handler(req, res) {
   addSelect('洗面_ホース引き出し', data.m5);
   addSelect('洗面_自動水栓', data.m6);
   addText('洗面_その他', data.mOther);
-
   addSelect('トイレ_メーカー', data.t1);
   addSelect('トイレ_タンク', data.t2);
   addSelect('トイレ_手洗い', data.t3);
@@ -70,4 +67,4 @@ export default async function handler(req, res) {
 
   const result = await response.json();
   return res.status(200).json({ ok: true, id: result.id });
-}
+};
